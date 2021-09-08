@@ -41,10 +41,15 @@ INSTALLED_APPS = [
     'City.apps.CityConfig',
     'Sublist.apps.SublistConfig',
     'Weather.apps.WeatherConfig',
-    'bootstrap4',
-    'django_bootstrap_icons'
+    'rest_framework',
+    'django_filters'
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -86,13 +91,16 @@ WSGI_APPLICATION = 'DjangoWeatherRemider.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'django_weather_db',
+        'USER': 'postgres',
+        'PASSWORD': 'ytrewq',
+        'HOST': '127.0.0.1',
+        'PORT': '5432'
+
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -115,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -140,3 +148,7 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'User.UserApp'
+
+API_WEATHER = '8ff9036b5231d214fd9f969c53ebb155'
+WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='
+ICON_URL = 'http://openweathermap.org/img/w/{}.png'

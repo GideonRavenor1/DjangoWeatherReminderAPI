@@ -16,5 +16,6 @@ class SubListApp(models.Model):
     class Meta:
         verbose_name = 'Subscription'
         verbose_name_plural = 'Subscriptions'
+        unique_together = ('city_id', 'user_id')
         ordering = ['-create_at']
 
