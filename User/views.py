@@ -1,7 +1,10 @@
 from rest_framework import generics
-from rest_framework.response import Response
 from .models import UserApp
-from .serializers import UsersAppSerializers, UserAppSerializers
+from .permissions import IsUserOrReadOnly
+from .serializers import (
+    UsersAppSerializers, UserAppSerializers,
+    UserAppUpdateSerializers
+)
 
 
 class UsersListView(generics.ListAPIView):
@@ -9,7 +12,19 @@ class UsersListView(generics.ListAPIView):
     serializer_class = UsersAppSerializers
 
 
-class UserView(generics.RetrieveAPIView):
+class UserView(generics.RetrieveDestroyAPIView):
     queryset = UserApp.objects.all()
     serializer_class = UserAppSerializers
+
+
+class UserDeleteView(generics.RetrieveDestroyAPIView):
+    queryset = UserApp.objects.all()
+    serializer_class = UserAppSerializers
+
+
+class UserUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = UserApp.objects.all()
+    serializer_class = UserAppUpdateSerializers
+    permission_classes = [IsUserOrReadOnly]
+
 
