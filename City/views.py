@@ -15,7 +15,7 @@ class CitiesListView(generics.ListAPIView):
     serializer_class = CitiesAppSerializers
 
 
-class CityView(generics.RetrieveDestroyAPIView):
+class CityDetailView(generics.RetrieveDestroyAPIView):
     queryset = CityApp.objects.all()
     serializer_class = CityAppGetDeleteSerializers
 

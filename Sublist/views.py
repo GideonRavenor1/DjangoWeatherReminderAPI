@@ -19,18 +19,18 @@ class SubListAppAddView(generics.CreateAPIView):
 
 
 class SubListAppAddAdminView(generics.ListCreateAPIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = (IsAdminUser,)
     queryset = SubListApp.objects.all()
     serializer_class = SubListAppAddAdminSerializers
 
 
 class SubListAppDelete(generics.RetrieveDestroyAPIView):
     queryset = SubListApp.objects.all()
-    permission_classes = [IsOwnerOrReadOnly]
+    permission_classes = (IsOwnerOrReadOnly,)
     serializer_class = SubListAppSerializers
 
 
 class SubListAppDeleteAdminView(generics.RetrieveDestroyAPIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = (IsAdminUser,)
     queryset = SubListApp.objects.all()
     serializer_class = SubListAppSerializers

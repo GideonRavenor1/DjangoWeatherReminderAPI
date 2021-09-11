@@ -1,4 +1,4 @@
-from rest_framework import serializers, permissions
+from rest_framework import serializers
 from .models import UserApp
 
 
@@ -10,21 +10,30 @@ class UsersAppSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = UserApp
-        fields = ['id', 'username', 'email', 'first_name',
-                  'last_name', 'gender', 'subscriptions']
+        fields = ('id', 'username', 'email', 'first_name',
+                  'last_name', 'gender', 'subscriptions')
 
 
 class UserAppSerializers(serializers.ModelSerializer):
+
     class Meta:
         model = UserApp
-        fields = ['id', 'username', 'email', 'first_name',
+        fields = ('id', 'username', 'email', 'first_name',
                   'last_name', 'gender', 'date_joined', 'last_login',
-                  'is_staff', 'is_superuser', 'subscriptions']
+                  'is_staff', 'is_superuser', 'subscriptions')
 
 
 class UserAppUpdateSerializers(serializers.ModelSerializer):
+
     class Meta:
         model = UserApp
-        fields = ['id', 'username', 'email',
-                  'first_name', 'last_name', 'gender']
+        fields = ('id', 'username', 'email',
+                  'first_name', 'last_name', 'gender')
 
+
+class UserAppCreateAdmin(serializers.ModelSerializer):
+    class Meta:
+        model = UserApp
+        fields = ('username', 'email', 'first_name',
+                  'last_name', 'gender',
+                  'is_staff')

@@ -8,3 +8,6 @@ class UserApp(AbstractUser):
         ('Female', 'Female')
     )
     gender = models.CharField(max_length=10, choices=GENDER, default='Male', verbose_name='Sex')
+
+    class Meta:
+        ordering = ['-date_joined']

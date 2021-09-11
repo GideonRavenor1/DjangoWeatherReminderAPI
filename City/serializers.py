@@ -8,9 +8,11 @@ from Weather.serializers import WeatherAppSerializers
 
 
 class CitiesAppSerializers(serializers.ModelSerializer):
+    weather = WeatherAppSerializers(many=True)
+
     class Meta:
         model = CityApp
-        fields = ["id", "name", "create_at"]
+        fields = ("id", "name", "create_at", "weather")
 
 
 class CityAppGetDeleteSerializers(serializers.ModelSerializer):
@@ -18,10 +20,11 @@ class CityAppGetDeleteSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = CityApp
-        fields = ['id', 'name', 'create_at', 'weather']
+        fields = ('id', 'name', 'create_at', 'weather')
 
 
 class CityCreateSerializers(serializers.ModelSerializer):
+    weather = WeatherAppSerializers(many=True, read_only=True)
 
     def create(self, validated_data):
         url = settings.WEATHER_URL + settings.API_WEATHER
@@ -40,4 +43,4 @@ class CityCreateSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = CityApp
-        fields = ['id', 'name', 'create_at']
+        fields = ('id', 'name', 'create_at', 'weather')

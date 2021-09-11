@@ -33,14 +33,14 @@ class SubListAppAddSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = SubListApp
-        fields = ['user_id', 'city_id']
+        fields = ('user_id', 'city_id')
 
 
 class SubListAppAddAdminSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = SubListApp
-        fields = ['user_id', 'city_id']
+        fields = ('user_id', 'city_id')
 
     def to_representation(self, instance):
         representation = super(SubListAppAddAdminSerializers, self).to_representation(instance)
