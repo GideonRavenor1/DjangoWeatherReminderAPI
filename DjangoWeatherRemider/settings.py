@@ -26,21 +26,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg2',
     'User.apps.UserConfig',
     'City.apps.CityConfig',
     'Sublist.apps.SublistConfig',
     'Weather.apps.WeatherConfig',
     'rest_framework',
-    'django_filters'
+    'rest_framework.authtoken',
+    'djoser',
+
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 5
+    'PAGE_SIZE': 5,
 }
 
 INTERNAL_IPS = [
@@ -139,3 +142,5 @@ AUTH_USER_MODEL = 'User.UserApp'
 API_WEATHER = os.getenv('API_WEATHER')
 WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='
 ICON_URL = 'http://openweathermap.org/img/w/{}.png'
+
+

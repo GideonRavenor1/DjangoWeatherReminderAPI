@@ -1,9 +1,12 @@
 import requests
+from django.http import QueryDict
 from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from DjangoWeatherRemider import settings
 from .models import CityApp
-from Weather.models import WeatherApp
+from .services import update_weather
+from .permissions import IsAdminUserOrReadOnly
 from .serializers import (
     CitiesAppSerializers, CityAppGetDeleteSerializers,
     CityCreateSerializers
@@ -13,22 +16,19 @@ from .serializers import (
 class CitiesListView(generics.ListAPIView):
     queryset = CityApp.objects.all()
     serializer_class = CitiesAppSerializers
+    permission_classes = (IsAuthenticated,)
 
 
 class CityDetailView(generics.RetrieveDestroyAPIView):
     queryset = CityApp.objects.all()
     serializer_class = CityAppGetDeleteSerializers
+    permission_classes = (IsAdminUserOrReadOnly, IsAuthenticated)
 
     def get(self, request, *args, **kwargs):
         url = settings.WEATHER_URL + settings.API_WEATHER
         city = CityApp.objects.get(pk=kwargs['pk']).name
         result = requests.get(url.format(city)).json()
-        WeatherApp.objects.filter(city=kwargs['pk']).update(temp=result['main']['temp'],
-                                                            feels_like=result['main']['feels_like'],
-                                                            pressure=result['main']['pressure'],
-                                                            visibility=result['visibility'],
-                                                            wind=result['wind']['speed'],
-                                                            icon=settings.ICON_URL.format(result['weather'][0]['icon']))
+        update_weather(result, kwargs)
 
         return self.retrieve(request, *args, **kwargs)
 
@@ -36,11 +36,15 @@ class CityDetailView(generics.RetrieveDestroyAPIView):
 class CityCreateView(generics.ListCreateAPIView):
     queryset = CityApp.objects.all()
     serializer_class = CityCreateSerializers
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
-        request.data._mutable = True
-        request.data['name'] = request.data['name'].title()
-        request.data._mutable = False
+        if isinstance(request.data, QueryDict):
+            request.data._mutable = True
+            request.data['name'] = request.data['name'].title()
+            request.data._mutable = False
+        else:
+            request.data['name'] = request.data['name'].title()
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

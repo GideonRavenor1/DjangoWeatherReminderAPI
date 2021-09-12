@@ -3,8 +3,8 @@ from rest_framework import serializers
 from DjangoWeatherRemider import settings
 from .exceptions import CityNotFound
 from .models import CityApp
-from Weather.models import WeatherApp
 from Weather.serializers import WeatherAppSerializers
+from .services import create_weather
 
 
 class CitiesAppSerializers(serializers.ModelSerializer):
@@ -32,11 +32,7 @@ class CityCreateSerializers(serializers.ModelSerializer):
         result = requests.get(url.format(city)).json()
         if result['cod'] == 200:
             instance = CityApp.objects.get_or_create(**validated_data)
-            WeatherApp.objects.create(temp=result['main']['temp'], feels_like=result['main']['feels_like'],
-                                      pressure=result['main']['pressure'], visibility=result['visibility'],
-                                      wind=result['wind']['speed'],
-                                      icon=settings.ICON_URL.format(result['weather'][0]['icon']),
-                                      city=CityApp.objects.get(name=city))
+            create_weather(result, city)
             return instance[0]
         else:
             raise CityNotFound
