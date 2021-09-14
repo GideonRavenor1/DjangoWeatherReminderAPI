@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13.4
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ytrewq
+      POSTGRES_USER: postqres
+      POSTGRES_DB: django_weather
+  django:
+    container_name: dwr_app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "python python /usr/src/dwr_rest/manage.py migrate --noinput &&
+             /usr/src/dwr_rest/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/dwr_rest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+volumes:
+  postgres_data:
