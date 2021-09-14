@@ -1,2 +1,3 @@
 venv
 /DjangoWeatherRemider/.env
+/.coverage
