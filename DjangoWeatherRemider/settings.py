@@ -2,19 +2,15 @@ from dotenv import load_dotenv
 import os
 from pathlib import Path
 
-
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 SECRET_KEY = os.getenv('SECRET_KEY')
-
 
 DEBUG = False
 
 ALLOWED_HOSTS = ['djangoweatherremider-foxmimded.herokuapp.com', '127.0.0.1']
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -31,6 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'whitenoise.runserver_nostatic',
 
 ]
 
@@ -55,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'DjangoWeatherRemider.urls'
@@ -77,18 +75,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'DjangoWeatherRemider.wsgi.application'
 
-
-DATABASES = {}
-
-DATABASES['default'] = {
+DATABASES = {'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     'NAME': 'postgres',
     'USER': 'postgres',
     'PASSWORD': 'ytrewq',
     'HOST': 'db',
     'PORT': '5432'
-}
-
+}}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -105,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
@@ -116,13 +109,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
