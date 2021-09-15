@@ -1,8 +1,7 @@
-import dj_database_url
 from dotenv import load_dotenv
 import os
 from pathlib import Path
-import django_heroku
+
 
 load_dotenv()
 
@@ -80,19 +79,16 @@ WSGI_APPLICATION = 'DjangoWeatherRemider.wsgi.application'
 
 
 DATABASES = {}
-if DEBUG:
-    DATABASES['default'] = {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'postgres',
-            'USER': 'postgres',
-            'PASSWORD': 'ytrewq',
-            'HOST': 'db',
-            'PORT': '5432'
-        }
-else:
-    django_heroku.settings(locals())
-    if dj_database_url.config():
-        DATABASES['default'] = dj_database_url.config()
+
+DATABASES['default'] = {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'postgres',
+    'USER': 'postgres',
+    'PASSWORD': 'ytrewq',
+    'HOST': 'db',
+    'PORT': '5432'
+}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
