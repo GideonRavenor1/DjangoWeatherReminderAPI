@@ -14,7 +14,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['djangoweatherremider-foxmimded.herokuapp.com', '127.0.0.1']
 
 
 INSTALLED_APPS = [
