@@ -81,7 +81,7 @@ DATABASES = {}
 if DEBUG:
     DATABASES['default'] = {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'django_weather',
+            'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'ytrewq',
             'HOST': 'db',

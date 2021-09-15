@@ -7,15 +7,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ytrewq
-      POSTGRES_USER: postqres
-      POSTGRES_DB: django_weather
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
   django:
     container_name: dwr_app
     build:
       context: ./
       dockerfile: Dockerfile
-    command: bash -c "python python /usr/src/dwr_rest/manage.py migrate --noinput &&
-             /usr/src/dwr_rest/manage.py runserver 0.0.0.0:8000
+    command: bash -c "python /usr/src/dwr_rest/manage.py migrate --noinput &&
+             python /usr/src/dwr_rest/manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/usr/src/dwr_rest
     ports:
