@@ -1,6 +1,8 @@
+import dj_database_url
 from dotenv import load_dotenv
 import os
 from pathlib import Path
+import django_heroku
 
 load_dotenv()
 
@@ -10,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -87,7 +89,10 @@ if DEBUG:
             'HOST': 'db',
             'PORT': '5432'
         }
-
+else:
+    django_heroku.settings(locals())
+    if dj_database_url.config():
+        DATABASES['default'] = dj_database_url.config()
 
 AUTH_PASSWORD_VALIDATORS = [
     {

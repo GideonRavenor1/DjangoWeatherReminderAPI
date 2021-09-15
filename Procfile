@@ -1,0 +1,1 @@
+web: gunicorn DjangoWeatherRemider.wsgi --log-file -
