@@ -121,3 +121,12 @@ AUTH_USER_MODEL = 'User.UserApp'
 API_WEATHER = os.getenv('API_WEATHER')
 WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='
 ICON_URL = 'http://openweathermap.org/img/w/{}.png'
+
+REDIS_HOST = '0.0.0.0'
+REDIS_PORT = '6379'
+CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'
