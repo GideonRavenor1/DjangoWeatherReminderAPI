@@ -12,7 +12,8 @@ def send_email_every_one_hour():
     subscriptions = SubListApp.objects.filter(send_email=1)
     if not subscriptions:
         return 'Subscriptions not found'
-    user_city_list = [[subscription.user_id, subscription.city_id] for subscription in subscriptions]
+    user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
+    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -22,7 +23,8 @@ def send_email_every_three_hours():
     subscriptions = SubListApp.objects.filter(send_email=3)
     if not subscriptions:
         return 'Subscriptions not found'
-    user_city_list = [[subscription.user_id, subscription.city_id] for subscription in subscriptions]
+    user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
+    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -32,7 +34,8 @@ def send_email_every_six_hours():
     subscriptions = SubListApp.objects.filter(send_email=6)
     if not subscriptions:
         return 'Subscriptions not found'
-    user_city_list = [[subscription.user_id, subscription.city_id] for subscription in subscriptions]
+    user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
+    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -43,9 +46,9 @@ def send_email(user_city_list):
     con.open()
     email_list = []
     for element in user_city_list:
-        weather = WeatherApp.objects.get(city=element[1].pk)
-        user = UserApp.objects.get(pk=element[0].pk)
-        city = CityApp.objects.get(pk=element[1].pk)
+        weather = WeatherApp.objects.get(city=element[1])
+        user = UserApp.objects.get(pk=element[0])
+        city = CityApp.objects.get(pk=element[1])
         context = {
             'username': user.username,
             'city': city.name,
@@ -56,9 +59,11 @@ def send_email(user_city_list):
             'wind': weather.wind,
             'icon': weather.icon,
         }
+        print(context)
         subject = render_to_string('subject.txt', context)
         body_text = render_to_string('body.txt', context)
-        email = EmailMessage(subject=subject, body=body_text, to=user.email, connection=con)
+        email = EmailMessage(subject=subject, body=body_text, to=[user.email], connection=con)
         email_list.append(email)
+    print(email_list)
     con.send_messages(email_list)
     con.close()
