@@ -6,7 +6,7 @@ from Weather.models import WeatherApp
 class WeatherInTab(admin.TabularInline):
     model = WeatherApp
     extra = 0
-    fields = ('update', 'temp', 'feels_like', 'pressure', 'visibility', 'wind', 'city')
+    fields = ('temp', 'feels_like', 'pressure', 'visibility', 'wind', 'city')
     readonly_fields = ('temp', 'feels_like', 'pressure', 'visibility', 'wind', 'city')
 
 
