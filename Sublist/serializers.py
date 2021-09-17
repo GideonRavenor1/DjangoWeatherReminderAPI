@@ -42,6 +42,14 @@ class SubListAppAddAdminSerializers(serializers.ModelSerializer):
         model = SubListApp
         fields = ('user_id', 'city_id', 'send_email')
 
+    def create(self, validated_data):
+        user = UserApp.objects.get(username=validated_data.get('user_id'))
+        if user.email:
+            instance = SubListApp.objects.create(**validated_data)
+            return instance
+        else:
+            raise UserEmailNotFound
+
     def to_representation(self, instance):
         representation = super(SubListAppAddAdminSerializers, self).to_representation(instance)
         representation['username'] = instance.user_id.username

@@ -1,6 +1,6 @@
 from DjangoWeatherRemider.celery import app
 from .models import SubListApp
-from django.core.mail import EmailMessage, get_connection
+from django.core.mail import EmailMultiAlternatives, get_connection
 from django.template.loader import render_to_string
 from User.models import UserApp
 from City.models import CityApp
@@ -13,7 +13,6 @@ def send_email_every_one_hour():
     if not subscriptions:
         return 'Subscriptions not found'
     user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
-    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -24,7 +23,6 @@ def send_email_every_three_hours():
     if not subscriptions:
         return 'Subscriptions not found'
     user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
-    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -35,7 +33,6 @@ def send_email_every_six_hours():
     if not subscriptions:
         return 'Subscriptions not found'
     user_city_list = [[subscription.user_id.pk, subscription.city_id.pk] for subscription in subscriptions]
-    print(user_city_list)
     send_email.delay(user_city_list)
     return 'Successfully'
 
@@ -59,11 +56,11 @@ def send_email(user_city_list):
             'wind': weather.wind,
             'icon': weather.icon,
         }
-        print(context)
-        subject = render_to_string('subject.txt', context)
-        body_text = render_to_string('body.txt', context)
-        email = EmailMessage(subject=subject, body=body_text, to=[user.email], connection=con)
+        subject = f"Hi, {user.username}!"
+        body_text = render_to_string('body.html', context)
+        email = EmailMultiAlternatives(subject=subject, body=body_text, to=[user.email], connection=con)
+        email.attach_alternative(body_text, 'text/html')
         email_list.append(email)
-    print(email_list)
     con.send_messages(email_list)
     con.close()
+    return 'Successfully'

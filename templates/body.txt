@@ -1,9 +1,0 @@
-Dear {{ username }}!
-Your weather in {{ city }} city:
-
-{{ icon }}
-1. Temperature {{ temp }}
-2. Feels like {{ feels_like }}
-3. Pressure {{ pressure }}
-4. Visibility {{ visibility }}
-5. Wind {{ wind }}

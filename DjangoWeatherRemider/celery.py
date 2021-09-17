@@ -11,18 +11,18 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     'update_weather_every_one_hour': {
         'task': 'City.tasks.constant_weather_update_every_one_hour',
-        'schedule': crontab(hour='*/1')
+        'schedule': crontab(minute=0, hour='*/1')
     },
     'send_email_every_one_hour': {
         'task': 'Sublist.tasks.send_email_every_one_hour',
-        'schedule': crontab(hour='*/1')
+        'schedule': crontab(minute=0, hour='*/1')
     },
     'send_email_every_three_hours': {
         'task': 'Sublist.send_email_every_three_hours',
-        'schedule': crontab(hour='*/3')
+        'schedule': crontab(minute=0, hour='*/3')
     },
     'send_email_every_six_hours': {
         'task': 'Sublist.send_email_every_six_hours',
-        'schedule': crontab(hour='*/6')
+        'schedule': crontab(minute=0, hour='*/6')
     }
 }
