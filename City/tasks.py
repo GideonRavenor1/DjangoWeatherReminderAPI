@@ -15,5 +15,3 @@ def constant_weather_update_every_one_hour():
         result = requests.get(URL.format(city.name)).json()
         update_weather(result, {'pk': city.pk})
     return 'Successfully'
-
-
