@@ -1,0 +1,2 @@
+Hi, {{ username }}!
+Your weather forecast for the city of {{ city }} from the service DjangoWeatherRemider.

@@ -3,16 +3,7 @@ from City.models import CityApp
 
 
 class WeatherApp(models.Model):
-    HOURS = (
-        (1, 1),
-        (3, 3),
-        (6, 6),
-        (9, 9),
-        (12, 12),
-        (24, 24)
-    )
     create_at = models.DateTimeField(auto_now=True, db_index=True, verbose_name='Create at')
-    update = models.SmallIntegerField(default=1, choices=HOURS, verbose_name='Notice period')
     temp = models.CharField(max_length=5, verbose_name='Temperature in C', blank=True, null=True)
     feels_like = models.CharField(max_length=5, verbose_name='Feels like in C', blank=True, null=True)
     pressure = models.CharField(max_length=5, verbose_name='Pressure', blank=True, null=True)

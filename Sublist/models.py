@@ -7,10 +7,7 @@ class SubListApp(models.Model):
     HOURS = (
         (1, 1),
         (3, 3),
-        (6, 6),
-        (9, 9),
-        (12, 12),
-        (24, 24)
+        (6, 6)
     )
     city_id = models.ForeignKey(CityApp, related_name='subscriptions',
                                 on_delete=models.CASCADE, verbose_name='City id')

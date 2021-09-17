@@ -31,9 +31,46 @@ services:
       - db
   redis:
     image: redis
+    container_name: dwr_redis
     restart: always
     ports:
       - "6379:6379"
-
+    depends_on:
+      - django
+  celery:
+    build: .
+    image: celery
+    container_name: dwr_celery
+    command: celery -A DjangoWeatherRemider worker -l INFO
+    volumes:
+      - .:/usr/src/dwr_rest
+    depends_on:
+      - db
+      - redis
+  celery-beat:
+    build: .
+    image: celery-beat
+    container_name: dwr_celery_beat
+    command: celery -A DjangoWeatherRemider beat -l INFO
+    volumes:
+      - .:/usr/src/dwr_rest
+    depends_on:
+      - db
+      - redis
+  flower:
+    image: mher/flower
+    container_name: dwr_flower
+    command: celery flower -A DjangoWeatherRemider --broker=redis://localhost:6379/0
+    volumes:
+      - .:/usr/src/dwr_rest
+    working_dir: /dwr_rest
+    ports:
+      - "5555:5555"
+    environment:
+      CELERY_BROKER_URL: redis://redis
+      CELERY_RESULT_BACKEND: redis://redis
+    depends_on:
+      - celery
+      - redis
 volumes:
   postgres_data:

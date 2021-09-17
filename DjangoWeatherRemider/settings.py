@@ -122,11 +122,19 @@ API_WEATHER = os.getenv('API_WEATHER')
 WEATHER_URL = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=metric&appid='
 ICON_URL = 'http://openweathermap.org/img/w/{}.png'
 
-REDIS_HOST = '0.0.0.0'
-REDIS_PORT = '6379'
-CELERY_BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
-CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
+
+RECIPIENTS_EMAIL = [os.getenv('RECIPIENTS_EMAIL')]
+DEFAULT_FROM_EMAIL = os.getenv('RECIPIENTS_EMAIL')
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
