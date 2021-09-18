@@ -6,7 +6,7 @@ from .services import update_weather
 URL = settings.WEATHER_URL + settings.API_WEATHER
 
 
-@app.task
+@app.task(name="Constant updates")
 def constant_weather_update_every_one_hour():
     cities = CityApp.objects.all()
     if not cities:

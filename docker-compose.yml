@@ -48,6 +48,7 @@ services:
       - .:/usr/src/dwr_rest
     depends_on:
       - db
+      - django
       - redis
   celery-beat:
     build: .
@@ -59,6 +60,7 @@ services:
       - .:/usr/src/dwr_rest
     depends_on:
       - db
+      - django
       - redis
   flower:
     image: mher/flower
@@ -75,6 +77,6 @@ services:
       CELERY_RESULT_BACKEND: redis://redis
     depends_on:
       - celery
-      - redis
+      - celery-beat
 volumes:
   postgres_data:
