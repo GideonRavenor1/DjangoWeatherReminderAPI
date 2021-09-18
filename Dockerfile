@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/dwr_rest
 
 COPY ./requirements.txt /usr/src/requirements.txt
+COPY ./prestart.sh /usr/src/prestart.sh
 
 RUN pip install -r /usr/src/requirements.txt
 
