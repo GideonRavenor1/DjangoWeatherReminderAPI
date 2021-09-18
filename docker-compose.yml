@@ -47,7 +47,6 @@ services:
     volumes:
       - .:/usr/src/dwr_rest
     depends_on:
-      - db
       - django
       - redis
   celery-beat:
@@ -59,7 +58,6 @@ services:
     volumes:
       - .:/usr/src/dwr_rest
     depends_on:
-      - db
       - django
       - redis
   flower:
@@ -77,6 +75,5 @@ services:
       CELERY_RESULT_BACKEND: redis://redis
     depends_on:
       - celery
-      - celery-beat
 volumes:
   postgres_data:
