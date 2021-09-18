@@ -42,6 +42,7 @@ services:
     build: .
     image: celery
     container_name: dwr_celery
+    restart: always
     command: celery -A DjangoWeatherRemider worker -l INFO
     volumes:
       - .:/usr/src/dwr_rest
@@ -51,6 +52,7 @@ services:
   celery-beat:
     build: .
     image: celery-beat
+    restart: always
     container_name: dwr_celery_beat
     command: celery -A DjangoWeatherRemider beat -l INFO
     volumes:
@@ -60,6 +62,7 @@ services:
       - redis
   flower:
     image: mher/flower
+    restart: always
     container_name: dwr_flower
     command: celery flower -A DjangoWeatherRemider --broker=redis://localhost:6379/0
     volumes:
