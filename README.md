@@ -1,6 +1,6 @@
 DjangoWeatherReminder
 =
-A small API service for sending weather. You can add cities, subscribe to them, choose the frequency of sending weather to e-mail.
+API service for sending weather. You can add cities, subscribe to them, choose the frequency of sending weather to e-mail.
 ==
 
 Technologies used:
