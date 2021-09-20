@@ -1,7 +1,7 @@
 DjangoWeatherReminder
 =
 ##A small API service for sending weather. You can add cities, subscribe to them, choose the frequency of sending weather to e-mail.
-#Technologies used:
+Technologies used:
 
 >Docker
 > 
@@ -21,7 +21,7 @@ DjangoWeatherReminder
 > 
 >SendGrid
 
-#To use you need:
+To use you need:
 >Your customized SednGrid account and host key.
 >
 >Downloaded and installed docker.
@@ -40,11 +40,11 @@ To create a superuser, enter
 >docker-compose exec django python manage.py createsuperuser
 > 
 
-#To view Swagger follow the link
+To view Swagger follow the link
 >localhost:8000/swagger/
 > 
-#Flower
+Flower
 >localhost:5555
 > 
-#Admin area
+Admin area
 >localhost:8000/admin
